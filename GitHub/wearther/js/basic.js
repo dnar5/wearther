@@ -36,46 +36,38 @@ function processImage(callback) {
             callback(formData);}
     };
 
-var Mood = (function () {       //Creating a Mood object which has the mood as a string and its corresponding emoji
-    function Mood(mood, emojiurl) {
-        this.mood = mood;
-        this.emojiurl = emojiurl;
-        this.name = mood;
-        this.emoji = emojiurl;
+var Outfit = (function () {       //Creating a Mood object which has the mood as a string and its corresponding emoji
+    function Outfit(outfit) {
+        this.outfit = outift;
+        this.name = outfit;
     }
     return Mood;
 }());
 
-var happy = new Mood("happy", "http://emojipedia-us.s3.amazonaws.com/cache/a0/38/a038e6d3f342253c5ea3c057fe37b41f.png");
-var sad = new Mood("sad", "https://cdn.shopify.com/s/files/1/1061/1924/files/Sad_Face_Emoji.png?9898922749706957214");
-var angry = new Mood("angry", "https://cdn.shopify.com/s/files/1/1061/1924/files/Very_Angry_Emoji.png?9898922749706957214");
-var neutral = new Mood("neutral", "https://cdn.shopify.com/s/files/1/1061/1924/files/Neutral_Face_Emoji.png?9898922749706957214");
+var cold = new Outfit("bring a jumper");
+var raining = new Outfit("dont forget an umbrella");
+var sunny = new Outfit("sunhat/sunnies");
 
-function getCurrMood(scores) {
-    var currentMood;
+function getCurrWeather(scores) {
+    var currentWeather;
     // In a practical sense, you would find the max emotion out of all the emotions provided. However we'll do the below just for simplicity's sake :P
-    if (scores.happiness > 0.4) {
-        currentMood = happy;
+    if (scores.cold > 0.4) {
+        currentWeather = cold;
     }
-    else if (scores.sadness > 0.4) {
-        currentMood = sad;
+    else if (scores.raining > 0.4) {
+        currentWeather = raining;
     }
-    else if (scores.anger > 0.4) {
-        currentMood = angry;
+    else if (scores.sunny > 0.4) {
+        currentWeather = sunny;
+    
     }
-    else {
-        currentMood = neutral;
-    }
-    return currentMood;
+    return currentWeather;
 }
 // Manipulate the DOM
 function changeUI() {
     //Show detected mood
-    pageheader.innerHTML = "Your mood is: " + currentMood.name;  //Remember currentMood is a Mood object, which has a name and emoji linked to it. 
-    //Show mood emoji
-    var img = document.getElementById("selected-img"); //getting a predefined area on our webpage to show the emoji
-    img.src = currentMood.emoji; //link that area to the emoji of our currentMood.
-    img.style.display = "inline"; //just some formating of the emoji's location
+    pageheader.innerHTML = "You should wear: " + currentWeather.name;  //Remember currentMood is a Mood object, which has a name and emoji linked to it. 
+   
 
 }
 function sendEmotionRequest(file, callback) {
